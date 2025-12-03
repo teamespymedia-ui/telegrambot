@@ -1,0 +1,52 @@
+{
+  "TOKEN": "8467323614:AAH3rR4ttGF46Tc6ccE0am1Vfb_dvHQWv9c",
+  "ADMIN_ID": 2034782232,
+  "ADMIN_USERNAME": "Avinashnani12",
+  "ADMIN_PASSWORD": "admin123",
+  "DEFAULT_UPI": "premium019@upi",
+  "WELCOME_IMAGE": "AgACAgUAAxkBAAIDdWkty5oIMeYHyBOpIfPTQ7HVclfLAAJADGsbn_dxVSnLNgz9626RAQADAgADeQADNgQ",
+  "CUSTOM_CAPTION": "📦 Manage 500A",
+  "PLANS": {
+    "500A": {
+      "NAME": "22 Channels Access",
+      "QR_IMAGE": "AgACAgUAAxkBAAICEGktwAXz-ndhRW8sYjBao6R8r_CUAAItDGsbn_dxVRi4EWAoyr30AQADAgADeAADNgQ",
+      "PLAN_PHOTO": "",
+      "UPI_ID": "premium019@upi",
+      "DEMO_LINK": "https://t.me/+l9sMlGHzD4JmNDU1",
+      "CHANNELS": [],
+      "LINKS": [
+        "https://t.me/addlist/XzhmampYw-AzY2Zl"
+      ]
+    },
+    "500B": {
+      "NAME": "35 Mega Collection",
+      "QR_IMAGE": "AgACAgUAAxkBAAICN2ktwRZrIgdvueMwhcP-vjuMSPsaAAIxDGsbn_dxVYWqeYjxSnuFAQADAgADeAADNgQ",
+      "PLAN_PHOTO": "",
+      "UPI_ID": "premium019@upi",
+      "DEMO_LINK": "https://t.me/+nalYEe2mtaA2NzM9",
+      "COLLECTION_LINKS": [
+        "https://t.me/addlist/KCVhU67diD1iYmU1",
+        "https://t.me/addlist/1XRMxCxaaqExMGI1"
+      ],
+      "LINKS": [
+        "🔙 Admin Menu"
+      ]
+    },
+    "800": {
+      "NAME": "Premium Combo (Both Plans)",
+      "QR_IMAGE": "AgACAgUAAxkBAAICiWktwn5hWwpc2bzshDhlZmMBOHTmAAIyDGsbn_dxVY7rpX_SsfaBAQADAgADeAADNgQ",
+      "PLAN_PHOTO": "",
+      "UPI_ID": "premium019@upi",
+      "DEMO_LINK": "https://t.me/+s3VHRE5dP2I2Y2Zl",
+      "CHANNELS": [],
+      "COLLECTION_LINKS": [
+        "https://t.me/addlist/KCVhU67diD1iYmU1",
+        "https://t.me/addlist/1XRMxCxaaqExMGI1"
+      ],
+      "LINKS": [
+        "https://t.me/addlist/XzhmampYw-AzY2Zl",
+        "https://t.me/+FA1DQYxWecM5OTQ9"
+      ]
+    }
+  }
+}
