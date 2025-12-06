@@ -14,6 +14,7 @@ from telegram import (
     Bot,
 )
 from telegram.error import BadRequest, TelegramError
+from telegram.request import HTTPXRequest
 from concurrent.futures import ThreadPoolExecutor
 
 # ---------- Logging ----------
@@ -59,17 +60,16 @@ def load_config():
             config = json.load(f)
     
     TOKEN = config["TOKEN"]
-    from telegram.request import HTTPXRequest
-
-# Create bot with proper timeout settings
-request = HTTPXRequest(
-    connection_pool_size=8,
-    connect_timeout=10.0,
-    read_timeout=10.0,
-    write_timeout=10.0,
-    pool_timeout=10.0
-)
-bot = Bot(token=TOKEN, request=request)
+    
+    # Create bot with proper timeout settings
+    request = HTTPXRequest(
+        connection_pool_size=8,
+        connect_timeout=10.0,
+        read_timeout=10.0,
+        write_timeout=10.0,
+        pool_timeout=10.0
+    )
+    bot = Bot(token=TOKEN, request=request)
     return config
 
 def save_config():
@@ -162,7 +162,7 @@ def is_admin(user_id):
 # ---------- Keyboards ----------
 def main_kb(user_id):
     kb = [
-        [KeyboardButton("🏁 Start"), KeyboardButton("📦 Plans")],
+        [KeyboardButton("🏠 Start"), KeyboardButton("📦 Plans")],
         [KeyboardButton("🎬 Demo"), KeyboardButton("❓ Help")]
     ]
     if is_admin(user_id):
@@ -234,7 +234,7 @@ async def cmd_plans(chat_id, user_id):
         if code == "500A":
             txt = f"📦 *{name}*\n💰 ₹500\n📺 22 Premium Channels"
         elif code == "500B":
-            txt = f"📦 *{name}*\n💰 ₹500\n📁 35 Mega Collections"
+            txt = f"📦 *{name}*\n💰 ₹500\n📚 35 Mega Collections"
         else:
             txt = f"💎 *{name}*\n💰 ₹800\n🎁 Both Plans Combined!"
         
@@ -310,7 +310,7 @@ async def send_links(user_id, code):
         return
     
     txt = (
-        f"{'🔐' if code == '500A' else '📁' if code == '500B' else '💎'} "
+        f"{'🔒' if code == '500A' else '📚' if code == '500B' else '💎'} "
         f"*Your Links - {name}*\n\n" +
         "\n".join(links) +
         "\n\n⚠️ *AUTO-DELETE IN 120 SECONDS!*\n"
@@ -475,7 +475,7 @@ async def process_update(update: Update):
         text = msg.text.strip()
         
         # ---------- Basic Commands ----------
-        if text in ["/start", "🏁 Start"]:
+        if text in ["/start", "🏠 Start"]:
             await cmd_start(chat_id, user_id, user)
             return
         
@@ -671,13 +671,13 @@ def webhook():
         data = request.get_json(force=True)
         update = Update.de_json(data, bot)
         
-        # Process directly without thread pool
+        # Process directly - faster and more reliable
         run_async_fast(process_update(update))
         
         return "ok", 200
     except Exception as e:
         logger.exception(f"Webhook error: {e}")
-        return "ok", 200  # Always return ok to Telegram
+        return "ok", 200
 
 @app.route("/")
 def index():
@@ -704,4 +704,3 @@ if __name__ == "__main__":
     print(f"🗑️ Deletion worker: Running")
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port, threaded=True)
-
