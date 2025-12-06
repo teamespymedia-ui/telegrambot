@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 # ---------- Thread Pool for Fast Response ----------
-executor = ThreadPoolExecutor(max_workers=10)
+executor = ThreadPoolExecutor(max_workers=2)
 
 # ---------- Config ----------
 CONFIG_PATH = "config.json"
@@ -59,7 +59,17 @@ def load_config():
             config = json.load(f)
     
     TOKEN = config["TOKEN"]
-    bot = Bot(token=TOKEN)
+    from telegram.request import HTTPXRequest
+
+# Create bot with proper timeout settings
+request = HTTPXRequest(
+    connection_pool_size=8,
+    connect_timeout=10.0,
+    read_timeout=10.0,
+    write_timeout=10.0,
+    pool_timeout=10.0
+)
+bot = Bot(token=TOKEN, request=request)
     return config
 
 def save_config():
@@ -661,13 +671,13 @@ def webhook():
         data = request.get_json(force=True)
         update = Update.de_json(data, bot)
         
-        # Process in thread pool for speed
-        executor.submit(run_async_fast, process_update(update))
+        # Process directly without thread pool
+        run_async_fast(process_update(update))
         
         return "ok", 200
     except Exception as e:
         logger.exception(f"Webhook error: {e}")
-        return "error", 500
+        return "ok", 200  # Always return ok to Telegram
 
 @app.route("/")
 def index():
@@ -694,3 +704,4 @@ if __name__ == "__main__":
     print(f"🗑️ Deletion worker: Running")
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port, threaded=True)
+
